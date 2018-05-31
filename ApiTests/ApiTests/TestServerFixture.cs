@@ -2,13 +2,14 @@ using System;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using NUnit.Framework;
 using TaxCalculator;
 
 namespace ApiTests
 {
     public class TestServerFixture : IDisposable
     {
-        private readonly TestServer _testServer;
+        public readonly TestServer _testServer;
         public HttpClient Client { get; set; }
         public TestServerFixture()
         {
