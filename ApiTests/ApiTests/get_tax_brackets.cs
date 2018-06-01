@@ -12,7 +12,7 @@ namespace ApiTests
     public class TaxCalculator  : TestServerFixture
     {
         [Test]
-        public async Task valid_resuest_to_tax_brackets()
+        public async Task get_tax_brackets()
         {
             var response = await Client.GetAsync("api/tax/brackets");
             response.EnsureSuccessStatusCode();
