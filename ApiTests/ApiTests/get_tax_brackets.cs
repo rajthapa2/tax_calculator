@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using TaxCalculator.Controllers;
 using TaxCalculator.Models;
 
 namespace ApiTests
