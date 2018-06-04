@@ -9,10 +9,12 @@ namespace TaxCalculator.Controllers
     [Route("api/tax")]
     public class TaxController : Controller
     {
+        private ITaxCalculatorService _taxCalculatorService;
         public List<TaxBracket> TaxBrackets { get; set; }
 
         public TaxController(ITaxCalculatorService taxCalculatorService)
         {
+            _taxCalculatorService = taxCalculatorService;
             TaxBrackets = taxCalculatorService.LoadTaxBrackets();
         }
 
@@ -30,7 +32,7 @@ namespace TaxCalculator.Controllers
                 return BadRequest(ModelState);
             }
 
-            var taxResponse = new TaxResponse(); 
+            var taxResponse = _taxCalculatorService.Calculate(taxRequest);
             return Ok(taxResponse);
         }
     }

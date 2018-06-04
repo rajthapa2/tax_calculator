@@ -8,7 +8,7 @@ namespace TaxCalculator.Controllers
         public EmploymentType  EmploymentType{ get; set; }
         [Required]
         [Range(0, 100000000)]
-        public int? Salary { get; set; }
+        public decimal? Salary { get; set; }
         public int Unit { get; set; }
     }
 }

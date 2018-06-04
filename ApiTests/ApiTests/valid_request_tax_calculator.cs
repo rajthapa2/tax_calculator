@@ -33,7 +33,7 @@ namespace ApiTests
 
             var jObjectResponse = JsonConvert.DeserializeObject<JObject>(content);
 
-            Assert.That(jObjectResponse["totalTax"].Value<decimal>(), Is.EqualTo(3657.00));
+            Assert.That(jObjectResponse["totalTax"].Value<decimal>(), Is.EqualTo(3382.00));
         }
     }
 }

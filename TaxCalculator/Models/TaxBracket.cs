@@ -17,7 +17,7 @@ namespace TaxCalculator.Models
                 _taxBrackets = new List<TaxBracket>
                 {
                     new TaxBracket {MinimumThreshold = 0, MaximumThreshold = 18200, Rate = 0},
-                    new TaxBracket {MinimumThreshold = 18201, MaximumThreshold = 37000, Rate = 19},
+                    new TaxBracket {MinimumThreshold = 18200, MaximumThreshold = 37000, Rate = 19},
                 };
             }
             return _taxBrackets;
