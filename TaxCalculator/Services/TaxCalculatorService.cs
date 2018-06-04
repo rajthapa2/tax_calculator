@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TaxCalculator.Controllers;
@@ -51,7 +52,7 @@ namespace TaxCalculator.Services
                     break;
                 }
             }
-            return new TaxResponse {TotalTax = totaltax};
+            return new TaxResponse { TotalTax = decimal.Round(totaltax, 2) };
         }
     }
 }
