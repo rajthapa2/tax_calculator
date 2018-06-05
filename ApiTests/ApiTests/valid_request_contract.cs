@@ -9,7 +9,7 @@ using TaxCalculator.Controllers;
 
 namespace ApiTests
 {
-    [TestFixture(17000.0, 0)]
+    [TestFixture(400, 0)]
     [TestFixture(18200.0, 0)]
     [TestFixture(18201.0, 0.19)]
     [TestFixture(18202.0, 0.38)]
@@ -49,7 +49,7 @@ namespace ApiTests
         }
 
         [Test]
-        public async Task calculates_correct_tax()
+        public async Task contract_calculates_correct_tax()
         {
             var content = await _response.Content.ReadAsStringAsync();
 
