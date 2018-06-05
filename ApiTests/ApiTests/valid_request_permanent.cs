@@ -13,6 +13,8 @@ namespace ApiTests
     [TestFixture("18202", 0.38)]
     [TestFixture("18203", 0.57)]
     [TestFixture("36000", 3382.00)]
+    [TestFixture("50000", 7797.00)]
+    [TestFixture("90000", 20932.00)]
     public class valid_request_permanent : TestServerFixture
     {
         private readonly double _tax;

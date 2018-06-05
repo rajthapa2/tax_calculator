@@ -23,7 +23,7 @@ namespace ApiTests
             var content = await response.Content.ReadAsStringAsync();
 
             var taxBrackets = JsonConvert.DeserializeObject<List<TaxBracket>>(content);
-            Assert.That(taxBrackets.Count, Is.EqualTo(2));
+            Assert.That(taxBrackets.Count, Is.EqualTo(5));
         }
     }
 }

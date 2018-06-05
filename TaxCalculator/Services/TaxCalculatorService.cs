@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TaxCalculator.Controllers;
 using TaxCalculator.Models;
 
@@ -37,18 +35,21 @@ namespace TaxCalculator.Services
 
             foreach (var taxBracket in TaxBrackets)
             {
-                if (currentSalary >= taxBracket.MaximumThreshold)
+                if (currentSalary >= taxBracket.MinimumThreshold)
                 {
-                    var totalTaxableSalaryInThisBracket = taxBracket.MaximumThreshold - taxBracket.MinimumThreshold;
-
+                    decimal totalTaxableSalaryInThisBracket;
+                    if (currentSalary >= taxBracket.MaximumThreshold)
+                    {
+                        totalTaxableSalaryInThisBracket = taxBracket.MaximumThreshold - taxBracket.MinimumThreshold;
+                    }
+                    else
+                    {
+                        totalTaxableSalaryInThisBracket = currentSalary.Value - taxBracket.MinimumThreshold;
+                    }
                     totaltax += taxBracket.Rate / 100 * totalTaxableSalaryInThisBracket;
-                    continue;
                 }
                 else
                 {
-                    var totalTaxableSalaryInThisBracket = currentSalary.Value - taxBracket.MinimumThreshold;
-                    totaltax += taxBracket.Rate / 100 * totalTaxableSalaryInThisBracket;
-
                     break;
                 }
             }
