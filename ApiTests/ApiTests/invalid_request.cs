@@ -16,7 +16,7 @@ namespace ApiTests
 
         public invalid_request()
         {
-            var json = "{\"EmploymentType\":\"Permanent\",\"Unit\":0}";
+            var json = "{\"EmploymentType\":\"Permanent\",\"DaysPerYear\":0}";
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             response = Client.PostAsync("api/tax/calculate", stringContent).Result;
         }

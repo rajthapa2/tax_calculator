@@ -9,6 +9,7 @@ namespace TaxCalculator.Controllers
         [Required]
         [Range(0, 100000000)]
         public decimal? Salary { get; set; }
-        public int Unit { get; set; }
+        public int? DaysPerYear { get; set; }
+        public bool? IncludesSuper { get; set; }
     }
 }
