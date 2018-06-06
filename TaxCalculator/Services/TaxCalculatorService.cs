@@ -105,7 +105,7 @@ namespace TaxCalculator.Services
     {
         public override decimal Calculate(TaxRequestDto request)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
     }
 }
