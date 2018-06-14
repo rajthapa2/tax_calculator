@@ -9,7 +9,7 @@ using TaxCalculator.Controllers;
 
 namespace ApiTests
 {
-    [TestFixture(400, 240, 0)]
+    [TestFixture(400, 240, true, 21555)]
 //    [TestFixture(18200.0, 0)]
 //    [TestFixture(18201.0, 0.19)]
 //    [TestFixture(18202.0, 0.38)]

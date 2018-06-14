@@ -57,53 +57,13 @@ namespace TaxCalculator.Services
 
     public abstract class CalculateTax
     {
-        public List<TaxBracket> TaxBrackets { get; set; }
+        public static List<TaxBracket> TaxBrackets { get; set; }
 
         protected CalculateTax()
         {
             TaxBrackets = TaxBracket.LoadTaxBrackets();
         }
         public virtual decimal Calculate(TaxRequestDto request)
-        {
-            return 0;
-        }
-    }
-
-    public class FullTimeTaxCalculate : CalculateTax
-    {
-        public override decimal Calculate(TaxRequestDto request)
-        {
-            var currentSalary = request.Salary;
-
-            var totaltax = 0m;
-
-            foreach (var taxBracket in TaxBrackets)
-            {
-                if (currentSalary >= taxBracket.MinimumThreshold)
-                {
-                    decimal totalTaxableSalaryInThisBracket;
-                    if (currentSalary >= taxBracket.MaximumThreshold)
-                    {
-                        totalTaxableSalaryInThisBracket = taxBracket.MaximumThreshold - taxBracket.MinimumThreshold;
-                    }
-                    else
-                    {
-                        totalTaxableSalaryInThisBracket = currentSalary.Value - taxBracket.MinimumThreshold;
-                    }
-                    totaltax += taxBracket.Rate / 100 * totalTaxableSalaryInThisBracket;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return totaltax;
-        }
-    }
-
-    public class ContractTaxCalculate : CalculateTax
-    {
-        public override decimal Calculate(TaxRequestDto request)
         {
             return 0;
         }
