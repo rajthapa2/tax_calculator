@@ -1,71 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TaxCalculator.Controllers;
+using TaxCalculator.Helpers;
 using TaxCalculator.Models;
 
 namespace TaxCalculator.Services
 {
     public interface ITaxCalculatorService
     {
-        List<TaxBracket> LoadTaxBrackets();
+//        List<TaxBracket> LoadTaxBrackets();
         TaxResponse Calculate(TaxRequestDto taxRequest);
     }
 
     public class TaxCalculatorService : ITaxCalculatorService
     {
-        public static List<TaxBracket> TaxBrackets { get; set; }
-
-        public List<CalculateTax> CalculateTaxs = new List<CalculateTax>();
-        public TaxCalculatorService()
+        private readonly ITaxBracketService _taxBracketService;
+        public TaxCalculatorService(ITaxBracketService taxBracketService)
         {
-            TaxBrackets = LoadTaxBrackets();
-        }
-
-        public List<TaxBracket> LoadTaxBrackets()
-        {
-            if (TaxBrackets != null && TaxBrackets.Any())
-            {
-                return TaxBrackets;
-            }
-            return TaxBracket.LoadTaxBrackets();
+            _taxBracketService = taxBracketService;
         }
 
         public TaxResponse Calculate(TaxRequestDto taxRequest)
         {
+            var taxBrackets = _taxBracketService.GetTaxBrackets();
+
             var employmentType = taxRequest.EmploymentType;
+            var taxService = EmploymentTypeSelector.Get(employmentType);
 
-            decimal totalTax = 0;
+            var totalTax = taxService.Calculate(taxRequest);
 
-            switch (employmentType)
-            {
-                case EmploymentType.Permanent:
-                {
-                    var fullTimeTaxCalculate = new FullTimeTaxCalculate();
-                    totalTax = fullTimeTaxCalculate.Calculate(taxRequest);
-                    break;
-                }
-                case EmploymentType.Contract:
-                {
-                    var contractTaxCalculate = new ContractTaxCalculate();
-                    totalTax = contractTaxCalculate.Calculate(taxRequest);
-                    break;
-                }
-            }
             return new TaxResponse {TotalTax = decimal.Round(totalTax, 2)};
         }
     }
 
-    public abstract class CalculateTax
+    public interface ICalculateTax
     {
-        public static List<TaxBracket> TaxBrackets { get; set; }
-
-        protected CalculateTax()
-        {
-            TaxBrackets = TaxBracket.LoadTaxBrackets();
-        }
-        public virtual decimal Calculate(TaxRequestDto request)
-        {
-            return 0;
-        }
+        decimal Calculate(TaxRequestDto request);
     }
 }

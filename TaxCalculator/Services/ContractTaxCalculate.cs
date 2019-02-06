@@ -1,10 +1,17 @@
 ﻿using TaxCalculator.Controllers;
+using TaxCalculator.Helpers;
 
 namespace TaxCalculator.Services
 {
-    public class ContractTaxCalculate : CalculateTax
+    public class ContractTaxCalculate : ICalculateTax
     {
-        public override decimal Calculate(TaxRequestDto request)
+        private readonly ITaxBracketService _taxBracketService;
+
+        public ContractTaxCalculate(ITaxBracketService taxBracketService)
+        {
+            _taxBracketService = taxBracketService;
+        }
+        public decimal Calculate(TaxRequestDto request)
         {
             decimal yearlySalaryWithoutSuper;
 
@@ -22,7 +29,8 @@ namespace TaxCalculator.Services
                 yearlySalaryWithoutSuper = request.DaysPerYear.Value * request.Salary.Value;
             }
 
-            return FullTimeTaxCalculate.CalculateAnnualyTax(yearlySalaryWithoutSuper);
+            var taxBrackets = _taxBracketService.GetTaxBrackets();
+            return Helper.CalculateAnnualTax(yearlySalaryWithoutSuper, taxBrackets);
         }
     }
 }

@@ -1,41 +1,27 @@
 ﻿using TaxCalculator.Controllers;
+using TaxCalculator.Helpers;
 
 namespace TaxCalculator.Services
 {
-    public class FullTimeTaxCalculate : CalculateTax
+    public class FullTimeTaxCalculate : ICalculateTax
     {
-        public override decimal Calculate(TaxRequestDto request)
+        private readonly ITaxBracketService _taxBracketService;
+
+        public FullTimeTaxCalculate(ITaxBracketService taxBracketService)
+        {
+            _taxBracketService = taxBracketService;
+        }
+        public decimal Calculate(TaxRequestDto request)
         {
             var currentSalary = request.Salary;
 
-          return  CalculateAnnualyTax(currentSalary.Value);
+          return  CalculateAnnualTax(currentSalary.Value);
         }
 
-        public static decimal CalculateAnnualyTax(decimal salary)
+        public decimal CalculateAnnualTax(decimal salary)
         {
-            var totaltax = 0m;
-
-            foreach (var taxBracket in TaxBrackets)
-            {
-                if (salary >= taxBracket.MinimumThreshold)
-                {
-                    decimal totalTaxableSalaryInThisBracket;
-                    if (salary >= taxBracket.MaximumThreshold)
-                    {
-                        totalTaxableSalaryInThisBracket = taxBracket.MaximumThreshold - taxBracket.MinimumThreshold;
-                    }
-                    else
-                    {
-                        totalTaxableSalaryInThisBracket = salary - taxBracket.MinimumThreshold;
-                    }
-                    totaltax += taxBracket.Rate / 100 * totalTaxableSalaryInThisBracket;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return totaltax;
+            var taxBrackets = _taxBracketService.GetTaxBrackets();
+            return Helper.CalculateAnnualTax(salary, taxBrackets);
         }
     }
 }

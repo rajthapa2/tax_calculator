@@ -3,6 +3,7 @@ using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using TaxCalculator.Models;
 using TaxCalculator.Services;
 
 namespace TaxCalculator
@@ -20,6 +21,7 @@ namespace TaxCalculator
            var serviceProvider = services.AddAutofacProvider(builder =>
             {
                 builder.RegisterType<TaxCalculatorService>().As<ITaxCalculatorService>();
+                builder.RegisterType<TaxBracketService>().As<ITaxBracketService>();
             });
             return serviceProvider;
         }

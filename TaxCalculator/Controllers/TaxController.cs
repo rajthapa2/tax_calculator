@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaxCalculator.Models;
 using TaxCalculator.Services;
 
@@ -9,19 +8,20 @@ namespace TaxCalculator.Controllers
     [Route("api/tax")]
     public class TaxController : Controller
     {
-        private ITaxCalculatorService _taxCalculatorService;
-        public List<TaxBracket> TaxBrackets { get; set; }
+        private readonly ITaxCalculatorService _taxCalculatorService;
+        private readonly ITaxBracketService _taxBracketService;
 
-        public TaxController(ITaxCalculatorService taxCalculatorService)
+        public TaxController(ITaxCalculatorService taxCalculatorService, ITaxBracketService taxBracketService)
         {
             _taxCalculatorService = taxCalculatorService;
-            TaxBrackets = taxCalculatorService.LoadTaxBrackets();
+            _taxBracketService = taxBracketService;
         }
 
         [HttpGet("brackets")]
         public IActionResult GetTaxBrackets()
         {
-            return Ok(TaxBrackets);
+            var taxBrackets = _taxBracketService.GetTaxBrackets();
+            return Ok(taxBrackets);
         }
 
         [HttpPost("calculate")]
