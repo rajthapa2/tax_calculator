@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using TaxCalculator.Controllers;
+﻿using TaxCalculator.Controllers;
 using TaxCalculator.Helpers;
 using TaxCalculator.Models;
 
@@ -8,7 +6,6 @@ namespace TaxCalculator.Services
 {
     public interface ITaxCalculatorService
     {
-//        List<TaxBracket> LoadTaxBrackets();
         TaxResponse Calculate(TaxRequestDto taxRequest);
     }
 
@@ -22,11 +19,8 @@ namespace TaxCalculator.Services
 
         public TaxResponse Calculate(TaxRequestDto taxRequest)
         {
-            var taxBrackets = _taxBracketService.GetTaxBrackets();
-
             var employmentType = taxRequest.EmploymentType;
             var taxService = EmploymentTypeSelector.Get(employmentType);
-
             var totalTax = taxService.Calculate(taxRequest);
 
             return new TaxResponse {TotalTax = decimal.Round(totalTax, 2)};
